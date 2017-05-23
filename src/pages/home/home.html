@@ -2,10 +2,10 @@
   
   <ion-grid>
 
-    <ion-row>
+    <ion-row *ngFor="let plans of columnedPlans; let i = index;">
 
-      <ion-col>
-        1 of 2
+      <ion-col *ngFor="let plan of plans; let j = index;">
+        {{plan.planId}}
       </ion-col>
 
     </ion-row>
