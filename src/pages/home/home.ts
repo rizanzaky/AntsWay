@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
+import { PlanPage } from '../plan/plan';
 
 @Component({
   selector: 'page-home',
@@ -8,20 +9,26 @@ import { DataProvider } from '../../providers/data/data';
 })
 export class HomePage {
   public columnedPlans: Plans[][];
+  public noOfColumns: number = 4;
 
   constructor(public navCtrl: NavController, private dataService: DataProvider) {
     this.getPlansFromLocal();
   }
 
   public getPlansFromLocal() {
-    this.dataService.getPlans(4).then(resPlans => {
+    this.dataService.getPlans(this.noOfColumns).then(resPlans => {
       this.columnedPlans = resPlans;
     });
+  }
+
+  public goToPlan() {
+    this.navCtrl.push(PlanPage);
   }
 }
 
 class Plans {
   public planId: number;
-  public icon: string;
+  public colour: string;
   public name: string;
+  public title: string;
 }

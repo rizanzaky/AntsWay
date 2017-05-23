@@ -15,19 +15,19 @@ export class DataProvider {
   // ];
 
   private plans: Plans[] = [
-    {planId: 1, icon: 'md-close', name: 'Be a Man'},
-    {planId: 2, icon: 'md-time', name: 'Financial'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 3, icon: 'md-close', name: 'Angular 2'},
-    {planId: 4, icon: 'md-time', name: 'MCP Exams'}
+    {planId: 1, colour: 'tile-red', title: "Basic", name: 'Be a Man'},
+    {planId: 2, colour: 'tile-green', title: "Basic", name: 'Financial'},
+    {planId: 3, colour: 'tile-orange', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-blue', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-purple', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-brown', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-gray', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-cyan', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-magenta', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-gold', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-yellow', title: "Basic", name: 'Angular 2'},
+    {planId: 3, colour: 'tile-red', title: "Basic", name: 'Angular 2'},
+    {planId: 4, colour: 'tile-red', title: "Basic", name: 'MCP Exams'}
   ];
 
   constructor() {
@@ -36,43 +36,35 @@ export class DataProvider {
   getPlans(columns): Promise<Plans[][]> {
     return new Promise<Plans[][]>(resolve => {
       resolve( this.getColumned(columns) );
-
-      console.log("plans: ", this.plans);
-      // resolve(this.plans);
     });
   }
 
   getColumned(columns): Plans[][] {
-    // console.log("Columns: ", columns)
     let columnedPlans = [];
-
+    
+    this.plans.push({planId: -1, colour: "tile-black", title: "New", name: "New"});
     let noOfPlans: number = this.plans.length;
-    let noOfIters: number = 1;
-    let modulus: number = noOfPlans / columns;
-    let modulo: number = noOfPlans % columns;
 
     for(var i=0; i < noOfPlans; i = i+columns) {
-      // let colLength: number = (noOfPlans - noOfIters * columns) > columns ? columns : (noOfPlans - noOfIters * columns);
-      let colLength: number = (noOfIters <= modulus) ? columns : modulo;
-      noOfIters++;
       let rowPlans: Plans[] = [];
 
-      for(var j=0; j < colLength; j++) {
-        rowPlans.push(this.plans[i+j]);
+      for(var j=0; j < columns; j++) {
+        if ((i + j) < noOfPlans)
+          rowPlans.push(this.plans[i+j]);
+        else
+          rowPlans.push(null);
       }
 
       columnedPlans.push(rowPlans);
     }
     
-    console.log("columnedPlans: ", columnedPlans);
-
     return(columnedPlans);
-    // return([]);
   }
 }
 
 class Plans {
   public planId: number;
-  public icon: string;
+  public colour: string;
   public name: string;
+  public title: string;
 }

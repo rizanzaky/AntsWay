@@ -4,8 +4,14 @@
 
     <ion-row *ngFor="let plans of columnedPlans; let i = index;">
 
-      <ion-col *ngFor="let plan of plans; let j = index;">
-        {{plan.planId}}
+      <ion-col text-center *ngFor="let plan of plans; let j = index;">
+        <ion-item *ngIf="plan">
+          <button ion-button block outline class="plan-button" [ngClass]="plan.colour" (click)="goToPlan()">
+            <span class="title">{{plan.title}}</span>
+            <br>
+            <span class="items">{{j}}</span>
+          </button>
+        </ion-item>
       </ion-col>
 
     </ion-row>
