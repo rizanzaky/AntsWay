@@ -8,7 +8,7 @@ import { PlanPage } from '../plan/plan';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  public columnedPlans: Plans[][];
+  public columnedPlans: Plan[][];
   public noOfColumns: number = 4;
 
   constructor(public navCtrl: NavController, private dataService: DataProvider) {
@@ -26,7 +26,7 @@ export class HomePage {
   }
 }
 
-class Plans {
+class Plan {
   public planId: number;
   public colour: string;
   public name: string;

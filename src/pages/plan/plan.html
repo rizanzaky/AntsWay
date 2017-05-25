@@ -1,13 +1,48 @@
-<ion-content  class="outer-content">
-  <ion-list>
-    <ion-list-header>
-      <h2>Plan My Plan</h2>
-      <p>List of my plans</p>
-    </ion-list-header>
+<ion-header>
+  <span>
+    <ion-fab right>
+      <button ion-button outline><ion-icon name="md-create"></ion-icon></button>
+    </ion-fab>
+
+    <h2>Plan My Plan</h2>
+    <p>List of my plans</p>
+
+    <span>--------------- 50%</span>
+  </span>
+</ion-header>
+
+<ion-content class="outer-content">
 
     <ion-item>
-      <h2>Venkman</h2>
-      <p>Back off man, I'm a scientist.</p>
-    </ion-item> 
-  </ion-list>
+        <button ion-button outline><ion-icon name="ios-arrow-back"></ion-icon></button>
+
+        <span>12 - Apr - 2017</span>
+
+        <button ion-button outline><ion-icon name="ios-arrow-forward"></ion-icon></button>
+    </ion-item>
+
+    <ion-list>
+      <ion-list-header>
+        Active Ones
+      </ion-list-header>
+
+        <ion-item *ngFor="let planItem of planItems">
+            <ion-label>Back off man, I'm a scientist.</ion-label>
+            <ion-toggle></ion-toggle>
+        </ion-item>
+
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header>
+        Inactive Ones
+      </ion-list-header>
+        <ion-item *ngFor="let inactiveItem of inactiveItems">
+            <ion-label>Back off man, I'm a scientist.</ion-label>
+        </ion-item>
+    </ion-list>
+
+    <ion-fab bottom right>
+      <button ion-fab mini><ion-icon name="ios-add"></ion-icon></button>
+    </ion-fab>
 </ion-content>
