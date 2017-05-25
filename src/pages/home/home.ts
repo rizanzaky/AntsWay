@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { PlanPage } from '../plan/plan';
+import { CreatePlanPopupPage } from '../popups/create_plan/create-plan';
 
 @Component({
   selector: 'page-home',
@@ -11,7 +12,11 @@ export class HomePage {
   public columnedPlans: Plan[][];
   public noOfColumns: number = 4;
 
-  constructor(public navCtrl: NavController, private dataService: DataProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    private dataService: DataProvider,
+    public modalCtrl: ModalController
+  ) {
     this.getPlansFromLocal();
   }
 
@@ -21,8 +26,16 @@ export class HomePage {
     });
   }
 
-  public goToPlan() {
-    this.navCtrl.push(PlanPage);
+  public goToPlan(planId: number) {
+    if (planId != -1)
+      this.navCtrl.push(PlanPage, {planId: planId});
+    else
+      this.createNewPlan();
+  }
+
+  private createNewPlan() {
+      let modal = this.modalCtrl.create(CreatePlanPopupPage);
+      modal.present();
   }
 }
 

@@ -31,20 +31,35 @@ export class DataProvider {
   ];
 
   private planItems: PlanItem[] = [
-    {planItemId: 1, planId: 3, status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()},
-    {planItemId: 2, planId: 3, status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()},
-    {planItemId: 3, planId: 3, status: PlanItemStatus.Inactive, activeDays: [], createdOn: new Date()},
-    {planItemId: 4, planId: 3, status: PlanItemStatus.Inactive, activeDays: [], createdOn: new Date()},
-    {planItemId: 5, planId: 2, status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()},
-    {planItemId: 6, planId: 3, status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()}
+    {planItemId: 1, planId: 3, name: "Monday, Sunday, Friday, Wednesday", status: PlanItemStatus.Active, activeDays: [1,0,5,3], createdOn: new Date()},
+    {planItemId: 2, planId: 3, name: "Monday, Friday", status: PlanItemStatus.Active, activeDays: [1,5], createdOn: new Date()},
+    {planItemId: 3, planId: 3, name: "Inactive: Wednesday, Saturday, Tuesday", status: PlanItemStatus.Inactive, activeDays: [3,6,2], createdOn: new Date()},
+    {planItemId: 4, planId: 3, name: "Inactive item", status: PlanItemStatus.Inactive, activeDays: [], createdOn: new Date()},
+    {planItemId: 5, planId: 2, name: "PlanId is TWO", status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()},
+    {planItemId: 6, planId: 3, name: "All days", status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()}
   ];
+
+  private stagedPlanItems: PlanItem[];
 
   constructor() {
   }
 
+  stagePlanItems(planId: number): Promise<PlanItem[]> {
+    this.stagedPlanItems = [];
+    this.stagedPlanItems = this.planItems.filter(f => {
+      f.planId == planId;
+    });
+
+    return new Promise<PlanItem[]>(resolve => {
+      resolve(this.stagedPlanItems);
+    });
+  }
+
   getPlanItems(planId: number): Promise<PlanItem[]> {
     return new Promise<PlanItem[]>(resolve => {
-      resolve(this.planItems);
+      let items = this.planItems.filter(f => f.planId == planId);
+
+      resolve(items);
     });
   }
 
@@ -87,6 +102,7 @@ class Plan {
 class PlanItem {
   public planItemId: number;
   public planId: number;
+  public name: string;
   public status: PlanItemStatus;
   public activeDays: number[];
   public createdOn: Date;

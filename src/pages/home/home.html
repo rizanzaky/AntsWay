@@ -6,7 +6,7 @@
 
       <ion-col text-center *ngFor="let plan of plans; let j = index;">
         <ion-item *ngIf="plan">
-          <button ion-button block outline class="plan-button" [ngClass]="plan.colour" (click)="goToPlan()">
+          <button ion-button block outline class="plan-button" [ngClass]="plan.colour" (click)="goToPlan(plan.planId)">
             <span class="title">{{plan.title}}</span>
             <br>
             <span class="items">{{j}}</span>

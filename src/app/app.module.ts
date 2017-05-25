@@ -8,12 +8,14 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PlanPage } from '../pages/plan/plan';
 import { DataProvider } from '../providers/data/data';
+import { CreatePlanPopupPage } from '../pages/popups/create_plan/create-plan';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    PlanPage
+    PlanPage,
+    CreatePlanPopupPage
   ],
   imports: [
     BrowserModule,
@@ -23,7 +25,8 @@ import { DataProvider } from '../providers/data/data';
   entryComponents: [
     MyApp,
     HomePage,
-    PlanPage
+    PlanPage,
+    CreatePlanPopupPage
   ],
   providers: [
     StatusBar,

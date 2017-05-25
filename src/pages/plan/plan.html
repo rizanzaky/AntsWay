@@ -1,5 +1,6 @@
 <ion-header>
-  <span>
+  <ion-navbar>
+    <span>
     <ion-fab right>
       <button ion-button outline><ion-icon name="md-create"></ion-icon></button>
     </ion-fab>
@@ -9,16 +10,17 @@
 
     <span>--------------- 50%</span>
   </span>
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="outer-content">
 
     <ion-item>
-        <button ion-button outline><ion-icon name="ios-arrow-back"></ion-icon></button>
+        <button ion-button outline (click)="getLeftDay()"><ion-icon name="ios-arrow-back"></ion-icon></button>
 
-        <span>12 - Apr - 2017</span>
+        <span>{{showDate()}}</span>
 
-        <button ion-button outline><ion-icon name="ios-arrow-forward"></ion-icon></button>
+        <button ion-button outline (click)="getRightDay()"><ion-icon name="ios-arrow-forward"></ion-icon></button>
     </ion-item>
 
     <ion-list>
@@ -26,8 +28,8 @@
         Active Ones
       </ion-list-header>
 
-        <ion-item *ngFor="let planItem of planItems">
-            <ion-label>Back off man, I'm a scientist.</ion-label>
+        <ion-item *ngFor="let activeItem of activePlanItems">
+            <ion-label>{{activeItem.name}}</ion-label>
             <ion-toggle></ion-toggle>
         </ion-item>
 
@@ -38,7 +40,7 @@
         Inactive Ones
       </ion-list-header>
         <ion-item *ngFor="let inactiveItem of inactiveItems">
-            <ion-label>Back off man, I'm a scientist.</ion-label>
+            <span>{{inactiveItem.name}}</span>
         </ion-item>
     </ion-list>
 
