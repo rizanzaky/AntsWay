@@ -18,6 +18,7 @@ export class HomePage {
     public modalCtrl: ModalController
   ) {
     this.getPlansFromLocal();
+    console.log("hit home constructor");
   }
 
   public getPlansFromLocal() {

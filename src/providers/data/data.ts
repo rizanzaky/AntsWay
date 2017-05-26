@@ -44,6 +44,10 @@ export class DataProvider {
   constructor() {
   }
 
+  createNewPlan() {
+    
+  }
+
   stagePlanItems(planId: number): Promise<PlanItem[]> {
     this.stagedPlanItems = [];
     this.stagedPlanItems = this.planItems.filter(f => {
