@@ -18,7 +18,7 @@ export class PlanPage {
     this.getPlanItemsFromLocal(navParams.data.planId).then(() => {
       this.filterPlanItems(this.displayDate.getDay());
     });
-    console.log("Controller Plan is hit");
+    console.log("constructor Plan is hit");
   }
 
   // readyPlanItems() {

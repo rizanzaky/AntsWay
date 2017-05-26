@@ -44,8 +44,12 @@ export class DataProvider {
   constructor() {
   }
 
-  createNewPlan() {
-    
+  createNewPlan(newPlan: Plan): Promise<void> {
+    return new Promise<void>(resolve => {
+      this.plans.push(newPlan);
+
+      resolve();
+    });
   }
 
   stagePlanItems(planId: number): Promise<PlanItem[]> {

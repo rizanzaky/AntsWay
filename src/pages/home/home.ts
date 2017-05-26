@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { PlanPage } from '../plan/plan';
@@ -8,7 +8,7 @@ import { CreatePlanPopupPage } from '../popups/create_plan/create-plan';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit {
   public columnedPlans: Plan[][];
   public noOfColumns: number = 4;
 
@@ -17,8 +17,16 @@ export class HomePage {
     private dataService: DataProvider,
     public modalCtrl: ModalController
   ) {
-    this.getPlansFromLocal();
     console.log("hit home constructor");
+  }
+
+  ngOnInit(): void {
+    console.log("home ngOnInit");
+  }
+
+  ionViewWillEnter() {
+    this.getPlansFromLocal();
+    console.log("home view entered");
   }
 
   public getPlansFromLocal() {
