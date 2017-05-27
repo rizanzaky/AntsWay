@@ -1,0 +1,14 @@
+<ion-header>
+    <ion-fab right>
+      <button ion-button outline (click)="dismiss()"><ion-icon name="md-close"></ion-icon></button>
+    </ion-fab>
+
+    <h2>Create New Plan</h2>
+</ion-header>
+<ion-content class="modal-popover">
+    <ion-item>
+        <ion-label color="primary" floating>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="itemName"></ion-input>
+    </ion-item>
+    <button ion-button outline (click)="createPlan()">Create Plan</button>
+</ion-content>

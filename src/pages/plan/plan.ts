@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
+import { CreateItemPopupPage } from '../popups/create_item/create-item';
 
 @Component({
   selector: 'page-plan',
@@ -14,7 +15,12 @@ export class PlanPage {
   public displayDate: Date = new Date();
   private months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dataService: DataProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private dataService: DataProvider,
+    public modalCtrl: ModalController
+  ) {
     this.getPlanItemsFromLocal(navParams.data.planId).then(() => {
       this.filterPlanItems(this.displayDate.getDay());
     });
@@ -24,6 +30,11 @@ export class PlanPage {
   // readyPlanItems() {
   //   this.dataService.stagePlanItems(1);
   // }
+
+  public createNewItem() {
+    let modal = this.modalCtrl.create(CreateItemPopupPage);
+      modal.present();
+  }
 
   filterPlanItems(dayNo: number) {
     this.activePlanItems = [];
@@ -67,6 +78,7 @@ export class PlanPage {
 class PlanItem {
   public planItemId: number;
   public planId: number;
+  public name: string;
   public status: PlanItemStatus;
   public activeDays: number[];
   public createdOn: Date;

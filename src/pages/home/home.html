@@ -2,9 +2,9 @@
   
   <ion-grid>
 
-    <ion-row *ngFor="let plans of columnedPlans; let i = index;">
+    <ion-row *ngFor="let plans of columnedPlans;">
 
-      <ion-col text-center *ngFor="let plan of plans; let j = index;">
+      <ion-col text-center *ngFor="let plan of plans;">
         <ion-item *ngIf="plan">
           <button ion-button block outline class="plan-button" [ngClass]="plan.colour" (click)="goToPlan(plan.planId)">
             <span class="title">{{plan.title}}</span>

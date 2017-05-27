@@ -11,6 +11,7 @@ import { CreatePlanPopupPage } from '../popups/create_plan/create-plan';
 export class HomePage implements OnInit {
   public columnedPlans: Plan[][];
   public noOfColumns: number = 4;
+  // public _isCreateNew = 1;
 
   constructor(
     public navCtrl: NavController, 
@@ -28,6 +29,16 @@ export class HomePage implements OnInit {
     this.getPlansFromLocal();
     console.log("home view entered");
   }
+
+  // public isCreateNew(): boolean {
+  //   // if (this._isCreateNew-- == 1) {
+  //   //   return true;
+  //   // } else {
+  //   //   return false;
+  //   // }
+
+  //   return (this._isCreateNew-- == 1);
+  // }
 
   public getPlansFromLocal() {
     this.dataService.getPlans(this.noOfColumns).then(resPlans => {

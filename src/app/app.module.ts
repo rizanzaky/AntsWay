@@ -8,14 +8,17 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PlanPage } from '../pages/plan/plan';
 import { DataProvider } from '../providers/data/data';
+import { DummyData } from '../providers/data/dummyData';
 import { CreatePlanPopupPage } from '../pages/popups/create_plan/create-plan';
+import { CreateItemPopupPage } from '../pages/popups/create_item/create-item';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     PlanPage,
-    CreatePlanPopupPage
+    CreatePlanPopupPage,
+    CreateItemPopupPage
   ],
   imports: [
     BrowserModule,
@@ -26,13 +29,15 @@ import { CreatePlanPopupPage } from '../pages/popups/create_plan/create-plan';
     MyApp,
     HomePage,
     PlanPage,
-    CreatePlanPopupPage
+    CreatePlanPopupPage,
+    CreateItemPopupPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataProvider
+    DataProvider,
+    DummyData
   ]
 })
 export class AppModule {}
