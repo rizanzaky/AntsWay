@@ -11,6 +11,7 @@ import { DataProvider } from '../providers/data/data';
 import { DummyData } from '../providers/data/dummyData';
 import { CreatePlanPopupPage } from '../pages/popups/create_plan/create-plan';
 import { CreateItemPopupPage } from '../pages/popups/create_item/create-item';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CreateItemPopupPage } from '../pages/popups/create_item/create-item';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp), 
+    FormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, NavController } from 'ionic-angular';
+import { ViewController, NavController, NavParams } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data';
 import { PlanPage } from '../../plan/plan';
 
@@ -9,31 +9,37 @@ import { PlanPage } from '../../plan/plan';
 export class CreatePlanPopupPage {
     public planName: string;
     public planDescription: string;
+    public planId: number;
 
     constructor(
         public viewCtrl: ViewController, 
-        private dataService: DataProvider,
+        public navParams: NavParams, 
+        private _dataService: DataProvider,
         public navCtrl: NavController
     ) {
+        this.getNewPlanId();
+    }
 
+    getNewPlanId() {
+        this._dataService.getNewPlanId().then(planId => {
+            this.planId = planId;
+        });
     }
 
     createPlan() {
         // validate form
 
         let newPlan: Plan = {
-            planId: 1, colour: 'tile-red', title: this.planName, name: this.planDescription
+            planId: this.planId, colour: 'tile-red', title: this.planName, name: this.planDescription
         }
 
-        this.dataService.createNewPlan(newPlan).then(() => {
-            this.navCtrl.push(PlanPage, {planId: newPlan.planId});
-            this.dismiss();
+        this._dataService.createNewPlan(newPlan).then(() => {
+            this.dismiss(newPlan.planId);
         });
     }
 
-    dismiss() {
-        console.log("dismissing popup");
-        this.viewCtrl.dismiss();
+    dismiss(newPlanId: number) {
+        this.viewCtrl.dismiss(newPlanId);
     }
 }
 

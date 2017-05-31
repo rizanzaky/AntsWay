@@ -8,6 +8,7 @@ import { DataProvider } from '../../../providers/data/data';
 export class CreateItemPopupPage {
     public itemName: string;
     private activeDays: number[] = [];
+    private planId: number;
 
     constructor(
         private viewCtrl: ViewController, 
@@ -15,27 +16,27 @@ export class CreateItemPopupPage {
         private navCtrl: NavController,
         private navParams: NavParams
     ) {
-
+        this.planId = navParams.data.planId;
     }
 
-    public isItemFound(dayNo: number): boolean {
+    public addRemoveDay(dayNo: number): boolean {
         let value = this.activeDays.find(f => f == dayNo);
-        alert("Yaayyy " + value)
 
-        return value ? true : false;
-    }
-
-    public addRemoveDay(dayNo: number) {
-        alert("Yaayyy")
-        this.activeDays.push(dayNo);
-        alert(JSON.stringify(this.activeDays))
+        if (!value) {
+            this.activeDays.push(dayNo);
+            return false;
+        } else {
+            let index = this.activeDays.indexOf(dayNo);
+            this.activeDays.splice(index, 1);
+            return true;
+        }
     }
 
     public createNewItem() {
         // validate form
 
         let newItem: PlanItem = {
-            planItemId: 1, planId: 1, name: this.itemName, status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()
+            planItemId: 1, planId: this.planId, name: this.itemName, status: PlanItemStatus.Active, activeDays: this.activeDays, createdOn: new Date()
         }
 
         this.dataService.createNewItem(newItem).then(() => {
@@ -43,9 +44,8 @@ export class CreateItemPopupPage {
         });
     }
 
-    dismiss(data: PlanItem) {
-        console.log("dismissing popup");
-        this.viewCtrl.dismiss(data);
+    dismiss(newPlanItem: PlanItem) {
+        this.viewCtrl.dismiss(newPlanItem);
     }
 }
 

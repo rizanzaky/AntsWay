@@ -11,6 +11,7 @@ export class PlanPage {
   private planItems: PlanItem[];
   public activePlanItems: PlanItem[];
   public inactiveItems: PlanItem[];
+  private planId: number;
 
   public displayDate: Date = new Date();
   private months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -21,20 +22,20 @@ export class PlanPage {
     private dataService: DataProvider,
     public modalCtrl: ModalController
   ) {
-    this.getPlanItemsFromLocal(navParams.data.planId).then(() => {
+    this.planId = navParams.data.planId;
+
+    this.getPlanItemsFromLocal(this.planId).then(() => {
       this.filterPlanItems(this.displayDate.getDay());
     });
-    console.log("constructor Plan is hit");
   }
 
-  // readyPlanItems() {
-  //   this.dataService.stagePlanItems(1);
-  // }
-
   public createNewItem() {
-      let modal = this.modalCtrl.create(CreateItemPopupPage);
+      let modal = this.modalCtrl.create(CreateItemPopupPage, {planId: this.planId});
+
       modal.onDidDismiss(newPlanItem => {
         if (newPlanItem) {
+          this.planItems.push(newPlanItem);
+
           let dayNo = this.displayDate.getDay();
           if (newPlanItem.status == PlanItemStatus.Active && (newPlanItem.activeDays.length == 0 || newPlanItem.activeDays.find(f => f == dayNo)))
             this.activePlanItems.push(newPlanItem);

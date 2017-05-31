@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { PlanPage } from '../plan/plan';
@@ -8,37 +8,17 @@ import { CreatePlanPopupPage } from '../popups/create_plan/create-plan';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit {
+export class HomePage {
   public columnedPlans: Plan[][];
-  public noOfColumns: number = 4;
-  // public _isCreateNew = 1;
+  public noOfColumns: number = 4; // get dynamically
 
   constructor(
     public navCtrl: NavController, 
     private dataService: DataProvider,
     public modalCtrl: ModalController
   ) {
-    console.log("hit home constructor");
-  }
-
-  ngOnInit(): void {
-    console.log("home ngOnInit");
-  }
-
-  ionViewWillEnter() {
     this.getPlansFromLocal();
-    console.log("home view entered");
   }
-
-  // public isCreateNew(): boolean {
-  //   // if (this._isCreateNew-- == 1) {
-  //   //   return true;
-  //   // } else {
-  //   //   return false;
-  //   // }
-
-  //   return (this._isCreateNew-- == 1);
-  // }
 
   public getPlansFromLocal() {
     this.dataService.getPlans(this.noOfColumns).then(resPlans => {
@@ -55,6 +35,14 @@ export class HomePage implements OnInit {
 
   private createNewPlan() {
       let modal = this.modalCtrl.create(CreatePlanPopupPage);
+
+      modal.onDidDismiss(newPlanItem => {
+        if (newPlanItem > 0) {
+          this.navCtrl.push(PlanPage, {planId: newPlanItem});
+          this.getPlansFromLocal();
+        }
+      });
+
       modal.present();
   }
 }

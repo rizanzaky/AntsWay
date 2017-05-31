@@ -6,7 +6,7 @@ export class DummyData {
     {planId: 4, colour: 'tile-blue', title: "Basic", name: 'Angular 2'},
     {planId: 5, colour: 'tile-purple', title: "Basic", name: 'Angular 2'},
     {planId: 6, colour: 'tile-brown', title: "Basic", name: 'Angular 2'},
-    {planId: 7, colour: 'tile-gray', title: "Basic", name: 'Angular 2'},
+    {planId: 18, colour: 'tile-gray', title: "Basic", name: 'Angular 2'},
     {planId: 8, colour: 'tile-cyan', title: "Basic", name: 'Angular 2'},
     {planId: 9, colour: 'tile-magenta', title: "Basic", name: 'Angular 2'},
     {planId: 10, colour: 'tile-gold', title: "Basic", name: 'Angular 2'},
