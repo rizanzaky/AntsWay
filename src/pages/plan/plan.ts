@@ -32,7 +32,18 @@ export class PlanPage {
   // }
 
   public createNewItem() {
-    let modal = this.modalCtrl.create(CreateItemPopupPage);
+      let modal = this.modalCtrl.create(CreateItemPopupPage);
+      modal.onDidDismiss(newPlanItem => {
+        if (newPlanItem) {
+          let dayNo = this.displayDate.getDay();
+          if (newPlanItem.status == PlanItemStatus.Active && (newPlanItem.activeDays.length == 0 || newPlanItem.activeDays.find(f => f == dayNo)))
+            this.activePlanItems.push(newPlanItem);
+          else
+            this.inactiveItems.push(newPlanItem);
+        }
+          
+      });
+
       modal.present();
   }
 

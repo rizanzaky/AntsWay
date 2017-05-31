@@ -10,5 +10,14 @@
         <ion-label color="primary" floating>Name</ion-label>
         <ion-input type="text" [(ngModel)]="itemName"></ion-input>
     </ion-item>
-    <button ion-button outline (click)="createPlan()">Create Plan</button>
+
+    <button ion-button (click)="addRemoveDay(1)" [ngClass]="{'active': isItemFound(1)}">M</button> 
+    <button ion-button (click)="addRemoveDay(2)">T</button> 
+    <button ion-button (click)="addRemoveDay(3)">W</button> 
+    <button ion-button (click)="addRemoveDay(4)">T</button> 
+    <button ion-button (click)="addRemoveDay(5)">F</button> 
+    <button ion-button (click)="addRemoveDay(6)">S</button> 
+    <button ion-button (click)="addRemoveDay(0)">S</button> 
+
+    <button ion-button outline (click)="createNewItem()">Save Plan Item</button>
 </ion-content>
