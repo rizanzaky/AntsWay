@@ -29,6 +29,10 @@ export class PlanPage {
     });
   }
 
+  editThisPlan() {
+    
+  }
+
   public createNewItem() {
       let modal = this.modalCtrl.create(CreateItemPopupPage, {planId: this.planId});
 

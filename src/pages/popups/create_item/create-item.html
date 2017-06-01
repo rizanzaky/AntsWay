@@ -20,5 +20,5 @@
     <button ion-button (click)="addRemoveDay(0)">S</button>
 
 
-    <button ion-button outline (click)="createNewItem()">Save Plan Item</button>
+    <button ion-button outline [disabled]="!planItemId" (click)="createNewItem()">Save Plan Item</button>
 </ion-content>

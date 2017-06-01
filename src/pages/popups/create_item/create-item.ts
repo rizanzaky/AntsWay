@@ -9,14 +9,24 @@ export class CreateItemPopupPage {
     public itemName: string;
     private activeDays: number[] = [];
     private planId: number;
+    public planItemId: number;
 
     constructor(
+        private _dataService: DataProvider,
         private viewCtrl: ViewController, 
         private dataService: DataProvider,
         private navCtrl: NavController,
         private navParams: NavParams
     ) {
         this.planId = navParams.data.planId;
+        this.getNewItemId();
+    }
+
+    getNewItemId() {
+        this._dataService.getNewItemId().then(planItemId => {
+            this.planItemId = planItemId;
+            console.log("New plan item id: ", planItemId);
+        });
     }
 
     public addRemoveDay(dayNo: number): boolean {
@@ -36,7 +46,7 @@ export class CreateItemPopupPage {
         // validate form
 
         let newItem: PlanItem = {
-            planItemId: 1, planId: this.planId, name: this.itemName, status: PlanItemStatus.Active, activeDays: this.activeDays, createdOn: new Date()
+            planItemId: this.planItemId, planId: this.planId, name: this.itemName, status: PlanItemStatus.Active, activeDays: this.activeDays, createdOn: new Date()
         }
 
         this.dataService.createNewItem(newItem).then(() => {

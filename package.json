@@ -43,5 +43,8 @@
     "plugins": {
       "cordova-sqlite-storage": {}
     }
+  },
+  "config": {
+    "ionic_source_map": "source-map"
   }
 }

@@ -91,6 +91,15 @@ export class DataProvider {
 
     return (this.plans[this.plans.length - 1].planId + 1);
   }
+
+  public async getNewItemId(): Promise<number> {
+    if (!this.planItems)
+      return 1;
+    
+    this.planItems.sort((a: PlanItem, b: PlanItem) => { return (a.planItemId - b.planItemId) });
+
+    return (this.planItems[this.planItems.length - 1].planItemId + 1);
+  }
 }
 
 class Plan {

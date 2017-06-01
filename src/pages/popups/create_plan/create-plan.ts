@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ViewController, NavController, NavParams } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data';
-import { PlanPage } from '../../plan/plan';
 
 @Component({
   templateUrl: 'create-plan.html'
