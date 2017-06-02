@@ -34,7 +34,7 @@ export class HomePage {
   }
 
   private createNewPlan() {
-      let modal = this.modalCtrl.create(CreatePlanPopupPage);
+      let modal = this.modalCtrl.create(CreatePlanPopupPage, {isCreate: true});
 
       modal.onDidDismiss(newPlanItem => {
         if (newPlanItem > 0) {

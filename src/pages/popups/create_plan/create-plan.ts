@@ -16,7 +16,10 @@ export class CreatePlanPopupPage {
         private _dataService: DataProvider,
         public navCtrl: NavController
     ) {
-        this.getNewPlanId();
+        if (navParams.data.isCreate)
+            this.getNewPlanId();
+        else
+            this.planId = navParams.data.planId;
     }
 
     getNewPlanId() {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { CreateItemPopupPage } from '../popups/create_item/create-item';
+import { CreatePlanPopupPage } from "../popups/create_plan/create-plan";
 
 @Component({
   selector: 'page-plan',
@@ -30,7 +31,9 @@ export class PlanPage {
   }
 
   editThisPlan() {
-    
+    let modal = this.modalCtrl.create(CreatePlanPopupPage, {planId: this.planId});
+
+    modal.present();
   }
 
   public createNewItem() {
