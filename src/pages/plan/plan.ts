@@ -13,6 +13,7 @@ export class PlanPage {
   public activePlanItems: PlanItem[];
   public inactiveItems: PlanItem[];
   private planId: number;
+  private plan: Plan;
 
   public displayDate: Date = new Date();
   private months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -20,10 +21,11 @@ export class PlanPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    private dataService: DataProvider,
+    private _dataService: DataProvider,
     public modalCtrl: ModalController
   ) {
-    this.planId = navParams.data.planId;
+    this.planId = navParams.data.plan.planId;
+    this.plan = navParams.data.plan;
 
     this.getPlanItemsFromLocal(this.planId).then(() => {
       this.filterPlanItems(this.displayDate.getDay());
@@ -31,7 +33,7 @@ export class PlanPage {
   }
 
   editThisPlan() {
-    let modal = this.modalCtrl.create(CreatePlanPopupPage, {planId: this.planId});
+    let modal = this.modalCtrl.create(CreatePlanPopupPage, {plan: this.plan});
 
     modal.present();
   }
@@ -71,7 +73,7 @@ export class PlanPage {
     this.planItems = [];
 
     return new Promise<void>(resolve => {
-      this.dataService.getPlanItems(planId).then(retPlanItems => {
+      this._dataService.getPlanItems(planId).then(retPlanItems => {
         this.planItems = retPlanItems;
         resolve();
       });
@@ -92,6 +94,13 @@ export class PlanPage {
     return (this.displayDate.getDate() < 10 ? "0" + this.displayDate.getDate() : this.displayDate.getDate()) + " / " + this.months[this.displayDate.getMonth()] + " / " + this.displayDate.getFullYear();
   }
 
+}
+
+class Plan {
+  public planId: number;
+  public colour: string;
+  public name: string;
+  public title: string;
 }
 
 class PlanItem {

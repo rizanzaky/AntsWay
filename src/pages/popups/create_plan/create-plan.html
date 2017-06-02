@@ -8,11 +8,11 @@
 <ion-content class="modal-popover">
     <ion-item>
         <ion-label color="primary" floating>Title</ion-label>
-        <ion-input type="text" [(ngModel)]="planName"></ion-input>
+        <ion-input type="text" [(ngModel)]="plan.title"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label color="primary" floating>Description</ion-label>
-        <ion-input type="text" [(ngModel)]="planDescription"></ion-input>
+        <ion-input type="text" [(ngModel)]="plan.name"></ion-input>
     </ion-item>
-    <button ion-button outline [disabled]="!planId" (click)="createPlan()">Create Plan</button>
+    <button ion-button outline [disabled]="!planId" (click)="isCreate ? createPlan() : editPlan()">{{isCreate ? 'Create' : 'Update'}} Plan</button>
 </ion-content>

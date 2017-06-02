@@ -5,8 +5,8 @@
         <button ion-button outline (click)="editThisPlan()"><ion-icon name="md-create"></ion-icon></button>
       </ion-fab>
 
-      <h2>Plan My Plan</h2>
-      <p>List of my plans</p>
+      <h2>{{plan ? plan.title : ''}}</h2>
+      <p>{{plan ? plan.name : ''}}</p>
 
       <span>--------------- 50%</span>
     </span>

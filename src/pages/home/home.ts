@@ -11,34 +11,41 @@ import { CreatePlanPopupPage } from '../popups/create_plan/create-plan';
 export class HomePage {
   public columnedPlans: Plan[][];
   public noOfColumns: number = 4; // get dynamically
+  private plan: Plan;
 
   constructor(
     public navCtrl: NavController, 
-    private dataService: DataProvider,
+    private _dataService: DataProvider,
     public modalCtrl: ModalController
   ) {
     this.getPlansFromLocal();
   }
 
   public getPlansFromLocal() {
-    this.dataService.getPlans(this.noOfColumns).then(resPlans => {
+    this._dataService.getPlans(this.noOfColumns).then(resPlans => {
       this.columnedPlans = resPlans;
     });
   }
 
+  private async getPlanDetails(planId: number): Promise<Plan> {
+    return this._dataService.getPlanDetails(planId);
+  }
+
   public goToPlan(planId: number) {
-    if (planId != -1)
-      this.navCtrl.push(PlanPage, {planId: planId});
-    else
+    if (planId != -1) {
+      this.getPlanDetails(planId).then(plan => {
+        this.navCtrl.push(PlanPage, {plan: plan});
+      });
+    } else
       this.createNewPlan();
   }
 
   private createNewPlan() {
       let modal = this.modalCtrl.create(CreatePlanPopupPage, {isCreate: true});
 
-      modal.onDidDismiss(newPlanItem => {
-        if (newPlanItem > 0) {
-          this.navCtrl.push(PlanPage, {planId: newPlanItem});
+      modal.onDidDismiss(newPlan => {
+        if (newPlan) {
+          this.navCtrl.push(PlanPage, {plan: newPlan});
           this.getPlansFromLocal();
         }
       });

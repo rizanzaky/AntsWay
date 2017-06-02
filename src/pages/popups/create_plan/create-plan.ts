@@ -6,9 +6,11 @@ import { DataProvider } from '../../../providers/data/data';
   templateUrl: 'create-plan.html'
 })
 export class CreatePlanPopupPage {
-    public planName: string;
-    public planDescription: string;
+    // public planName: string;
+    // public planDescription: string;
     public planId: number;
+    private plan: Plan;
+    public isCreate: boolean;
 
     constructor(
         public viewCtrl: ViewController, 
@@ -16,10 +18,18 @@ export class CreatePlanPopupPage {
         private _dataService: DataProvider,
         public navCtrl: NavController
     ) {
-        if (navParams.data.isCreate)
-            this.getNewPlanId();
-        else
-            this.planId = navParams.data.planId;
+        this.isCreate = navParams.data.isCreate;
+
+        if (this.isCreate) {
+            this.getNewPlanId(); // check for async
+            this.plan = new Plan();
+        }
+        else {
+            this.planId = navParams.data.plan.planId;
+            this.plan = navParams.data.plan;
+            // this.planName = this.plan.title;
+            // this.planDescription = this.plan.name;
+        }
     }
 
     getNewPlanId() {
@@ -32,16 +42,24 @@ export class CreatePlanPopupPage {
         // validate form
 
         let newPlan: Plan = {
-            planId: this.planId, colour: 'tile-red', title: this.planName, name: this.planDescription
+            planId: this.planId, colour: 'tile-red', title: this.plan.title, name: this.plan.name
         }
 
         this._dataService.createNewPlan(newPlan).then(() => {
-            this.dismiss(newPlan.planId);
+            this.dismiss(newPlan);
         });
     }
 
-    dismiss(newPlanId: number) {
-        this.viewCtrl.dismiss(newPlanId);
+    editPlan() {
+        // // validate form
+        
+        this._dataService.updatePlan(this.plan).then(() => {
+            this.dismiss(this.plan);
+        });
+    }
+
+    dismiss(newPlan: Plan) {
+        this.viewCtrl.dismiss(newPlan);
     }
 }
 

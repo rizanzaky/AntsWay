@@ -11,12 +11,31 @@ export class DataProvider {
   constructor(private dummyData: DummyData) {
   }
 
+  async getPlanDetails(planId: number): Promise<Plan> {  
+    let plan = this.plans.find(f => f.planId == planId); // error handle
+
+    return plan;
+
+    // return new Promise<Plan>(resolve => {
+    //   setTimeout(() => {
+    //     resolve(plan)
+    //   }, 2000)
+    // });
+  }
+
   createNewPlan(newPlan: Plan): Promise<void> {
     return new Promise<void>(resolve => {
       this.plans.push(newPlan);
 
       resolve();
     });
+  }
+
+  public async updatePlan(planToUpdate: any) {
+    let plan = await this.plans.find(f => f.planId == planToUpdate.planId);
+
+    plan.title = planToUpdate.title;
+    plan.name = planToUpdate.name;
   }
 
   stagePlanItems(planId: number): Promise<PlanItem[]> {
