@@ -11,6 +11,7 @@ import { DataProvider } from '../providers/data/data';
 import { DummyData } from '../providers/data/dummyData';
 import { CreatePlanPopupPage } from '../pages/popups/create_plan/create-plan';
 import { CreateItemPopupPage } from '../pages/popups/create_item/create-item';
+import { ItemLongActionPage } from '../pages/popups/item_long_action/item-long-action';
 import { FormsModule } from "@angular/forms";
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FormsModule } from "@angular/forms";
     HomePage,
     PlanPage,
     CreatePlanPopupPage,
-    CreateItemPopupPage
+    CreateItemPopupPage,
+    ItemLongActionPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { FormsModule } from "@angular/forms";
     HomePage,
     PlanPage,
     CreatePlanPopupPage,
-    CreateItemPopupPage
+    CreateItemPopupPage,
+    ItemLongActionPage
   ],
   providers: [
     StatusBar,

@@ -11,8 +11,27 @@ export class DataProvider {
   constructor(private dummyData: DummyData) {
   }
 
+  // public async getPlanItemDetails(planId: number, planItemId: number) {
+  //   let planItem = await this.planItems.find(f => f.planId == planId && f.planItemId == planItemId); // error handle
+
+  //   return planItem;
+  // }
+
+  public async updatePlanItem(planItem: PlanItem): Promise<void> {
+    let item = await this.planItems.find(f => f.planId == planItem.planId && f.planItemId == planItem.planItemId);
+
+    item.name = planItem.name;
+    item.status = planItem.status;
+    item.activeDays = planItem.activeDays;
+  }
+
+  public async deletePlanItem(planId: number, planItemId: number): Promise<void> {
+    let indexItemToDel = await this.planItems.findIndex(f => f.planId == planId && f.planItemId == planItemId);
+    this.planItems.splice(indexItemToDel, 1);
+  }
+
   async getPlanDetails(planId: number): Promise<Plan> {  
-    let plan = this.plans.find(f => f.planId == planId); // error handle
+    let plan = await this.plans.find(f => f.planId == planId); // error handle
 
     return plan;
 
@@ -31,7 +50,7 @@ export class DataProvider {
     });
   }
 
-  public async updatePlan(planToUpdate: any) {
+  public async updatePlan(planToUpdate: Plan) {
     let plan = await this.plans.find(f => f.planId == planToUpdate.planId);
 
     plan.title = planToUpdate.title;
@@ -49,14 +68,17 @@ export class DataProvider {
     });
   }
 
-  getPlanItems(planId: number): Promise<PlanItem[]> {
+  public async getPlanItems(planId: number): Promise<PlanItem[]> {
     this.planItems = this.dummyData.planItems;
 
-    return new Promise<PlanItem[]>(resolve => {
-      let items = this.planItems.filter(f => f.planId == planId);
+    let items = await this.planItems.filter(f => f.planId == planId); // error handle
+    return items;
 
-      resolve(items);
-    });
+    // return new Promise<PlanItem[]>(resolve => {
+    //   setTimeout(() => {
+    //     resolve(items)
+    //   }, 2000)
+    // });
   }
 
   getPlans(columns: number): Promise<Plan[][]> {
@@ -70,7 +92,6 @@ export class DataProvider {
     let columnedPlans = [];
     this.plans = this.dummyData.plans;
     
-    console.log("dummyData: ", this.dummyData);
     let noOfPlans: number = this.plans.length;
 
     for(var i=0; i < noOfPlans+1; i = i+columns) {
@@ -89,7 +110,6 @@ export class DataProvider {
 
       columnedPlans.push(rowPlans);
     }
-    console.log("columnedPlans: ", columnedPlans);
     
     return(columnedPlans);
   }

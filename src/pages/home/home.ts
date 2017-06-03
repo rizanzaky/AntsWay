@@ -11,7 +11,6 @@ import { CreatePlanPopupPage } from '../popups/create_plan/create-plan';
 export class HomePage {
   public columnedPlans: Plan[][];
   public noOfColumns: number = 4; // get dynamically
-  private plan: Plan;
 
   constructor(
     public navCtrl: NavController, 

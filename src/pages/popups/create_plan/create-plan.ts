@@ -6,8 +6,6 @@ import { DataProvider } from '../../../providers/data/data';
   templateUrl: 'create-plan.html'
 })
 export class CreatePlanPopupPage {
-    // public planName: string;
-    // public planDescription: string;
     public planId: number;
     private plan: Plan;
     public isCreate: boolean;
@@ -27,8 +25,6 @@ export class CreatePlanPopupPage {
         else {
             this.planId = navParams.data.plan.planId;
             this.plan = navParams.data.plan;
-            // this.planName = this.plan.title;
-            // this.planDescription = this.plan.name;
         }
     }
 
@@ -41,12 +37,11 @@ export class CreatePlanPopupPage {
     createPlan() {
         // validate form
 
-        let newPlan: Plan = {
-            planId: this.planId, colour: 'tile-red', title: this.plan.title, name: this.plan.name
-        }
+        this.plan.planId = this.planId;
+        this.plan.colour = 'title-red';
 
-        this._dataService.createNewPlan(newPlan).then(() => {
-            this.dismiss(newPlan);
+        this._dataService.createNewPlan(this.plan).then(() => {
+            this.dismiss(this.plan);
         });
     }
 

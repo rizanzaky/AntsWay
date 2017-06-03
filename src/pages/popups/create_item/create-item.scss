@@ -23,3 +23,13 @@ ion-modal {
         background-color: #fafafa;
     }
 }
+
+.item-inactive {
+    color: red;
+    border-color: red;
+}
+
+.item-active {
+    color: green;
+    border-color: green;
+}

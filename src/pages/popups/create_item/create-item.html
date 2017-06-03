@@ -8,7 +8,7 @@
 <ion-content class="modal-popover">
     <ion-item>
         <ion-label color="primary" floating>Name</ion-label>
-        <ion-input type="text" [(ngModel)]="itemName"></ion-input>
+        <ion-input type="text" [(ngModel)]="planItem.name"></ion-input>
     </ion-item>
 
     <button ion-button (click)="addRemoveDay(1)">M</button> 
@@ -19,6 +19,7 @@
     <button ion-button (click)="addRemoveDay(6)">S</button> 
     <button ion-button (click)="addRemoveDay(0)">S</button>
 
+    <button ion-button outline (click)="toggleItemStatus()" [ngClass]="planItem.status == 2 ? 'item-inactive' : 'item-active'">{{(planItem.status == 2) ? 'Deactivated' : 'Activated'}}</button>
 
-    <button ion-button outline [disabled]="!planItemId" (click)="createNewItem()">Save Plan Item</button>
+    <button ion-button outline [disabled]="!planItemId" (click)="isCreate ? createNewItem() : editPlanItem()">{{isCreate ? 'Create' : 'Update'}} Plan Item</button>
 </ion-content>
