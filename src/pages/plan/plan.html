@@ -28,7 +28,7 @@
         Active Ones
       </ion-list-header>
 
-        <ion-item *ngFor="let activeItem of activePlanItems" (click)="longPressAction($event, activeItem.planItemId, true)">
+        <ion-item *ngFor="let activeItem of activePlanItems" (press)="longPressAction($event, activeItem.planItemId, true)">
             <ion-label>{{activeItem.planItemId}} {{activeItem.name}}</ion-label>
             <ion-toggle></ion-toggle>
         </ion-item>
@@ -39,7 +39,7 @@
       <ion-list-header>
         Inactive Ones
       </ion-list-header>
-        <ion-item *ngFor="let inactiveItem of inactivePlanItems" (click)="longPressAction($event, inactiveItem.planItemId, false)">
+        <ion-item *ngFor="let inactiveItem of inactivePlanItems" (press)="longPressAction($event, inactiveItem.planItemId, false)">
             <span>{{inactiveItem.planItemId}} {{inactiveItem.name}}</span>
         </ion-item>
     </ion-list>

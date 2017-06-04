@@ -49,10 +49,15 @@ export class PlanPage {
     let popover = this.popoverCtrl.create(ItemLongActionPage);
 
     popover.onDidDismiss(selection => {
-      if (selection == 1) { // delete
-        this.confirmForDelete(planItemId, isActive);
-      } else { // edit
-        this.editPlanItem(planItemId);
+      switch (selection) {
+        case 1:
+          this.confirmForDelete(planItemId, isActive);
+          break;
+        case 2:
+          this.editPlanItem(planItemId);
+          break;
+        default:
+          break;
       }
     });
 
@@ -127,13 +132,11 @@ export class PlanPage {
   }
 
   filterPlanItems(dayNo: number) {
-    console.log("dayNo: ", dayNo)
     this.activePlanItems = [];
     this.inactivePlanItems = [];
 
     this.planItems.forEach(planItem => {
-      console.log("planItemActD: ", planItem.activeDays)
-      if (planItem.status == PlanItemStatus.Active && (planItem.activeDays.length == 0 || planItem.activeDays.find(f => f == dayNo)))
+      if (planItem.status == PlanItemStatus.Active && (planItem.activeDays.length == 0 || planItem.activeDays.find(f => f == dayNo) >= 0))
         this.activePlanItems.push(planItem);
       else
         this.inactivePlanItems.push(planItem);
