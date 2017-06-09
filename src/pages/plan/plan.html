@@ -29,8 +29,8 @@
       </ion-list-header>
 
         <ion-item *ngFor="let activeItem of activePlanItems" (press)="longPressAction($event, activeItem.planItemId, true)">
-            <ion-label>{{activeItem.planItemId}} {{activeItem.name}}</ion-label>
-            <ion-toggle></ion-toggle>
+            <ion-label>{{activeItem.planItemId}} {{activeItem.name}} {{activeItem.isDone}}</ion-label>
+            <ion-toggle [(ngModel)]="activeItem.isDone"></ion-toggle>
         </ion-item>
 
     </ion-list>

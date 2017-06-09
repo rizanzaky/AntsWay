@@ -16,24 +16,29 @@ export class DummyData {
   ];
 
   public planItems: PlanItem[] = [
-    {planItemId: 1, planId: 3, name: "Monday, Sunday, Friday, Wednesday", status: PlanItemStatus.Active, activeDays: [1,0,5,3], createdOn: new Date()},
-    {planItemId: 2, planId: 3, name: "Monday, Friday", status: PlanItemStatus.Active, activeDays: [1,5], createdOn: new Date()},
-    {planItemId: 3, planId: 3, name: "Inactive: Wednesday, Saturday, Tuesday", status: PlanItemStatus.Inactive, activeDays: [3,6,2], createdOn: new Date()},
-    {planItemId: 4, planId: 3, name: "Inactive item", status: PlanItemStatus.Inactive, activeDays: [], createdOn: new Date()},
-    {planItemId: 5, planId: 2, name: "PlanId is TWO", status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()},
-    {planItemId: 6, planId: 3, name: "All days", status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()}
+    {planItemId: 1, planId: 3, name: "Monday, Sunday, Friday, Wednesday", isDone: false, status: PlanItemStatus.Active, activeDays: [1,0,5,3], createdOn: new Date()},
+    {planItemId: 2, planId: 3, name: "Monday, Friday", status: PlanItemStatus.Active, isDone: false, activeDays: [1,5], createdOn: new Date()},
+    {planItemId: 3, planId: 3, name: "Inactive: Wednesday, Saturday, Tuesday", isDone: false, status: PlanItemStatus.Inactive, activeDays: [3,6,2], createdOn: new Date()},
+    {planItemId: 4, planId: 3, name: "Inactive item", isDone: false, status: PlanItemStatus.Inactive, activeDays: [], createdOn: new Date()},
+    {planItemId: 5, planId: 2, name: "PlanId is TWO", isDone: false, status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()},
+    {planItemId: 6, planId: 3, name: "All days", isDone: false, status: PlanItemStatus.Active, activeDays: [], createdOn: new Date()}
   ];
-  
-  // private plans: Plan[][] = [
-  //   [
-  //     {planId: 1, icon: 'md-close', name: 'Be a Man'},
-  //     {planId: 2, icon: 'md-time', name: 'Financial'},
-  //     {planId: 3, icon: 'md-close', name: 'Angular 2'}
-  //   ],
-  //   [
-  //     {planId: 4, icon: 'md-time', name: 'MCP Exams'}
-  //   ]
-  // ];
+
+  public itemSelections: ItemSelection[] = [
+    {planId: 3, planItemId: 6, date: new Date(2017, 5, 8), isDone: true},
+    {planId: 3, planItemId: 6, date: new Date(2017, 5, 7), isDone: true},
+    {planId: 3, planItemId: 6, date: new Date(2017, 5, 5), isDone: true},
+    {planId: 2, planItemId: 5, date: new Date(2017, 5, 8), isDone: true},
+    {planId: 2, planItemId: 5, date: new Date(2017, 5, 4), isDone: true},
+    {planId: 3, planItemId: 1, date: new Date(2017, 5, 7), isDone: true}
+  ];
+}
+
+class ItemSelection {
+  public planId: number;
+  public planItemId: number;
+  public date: Date;
+  public isDone: boolean;
 }
 
 class Plan {
@@ -47,6 +52,7 @@ class PlanItem {
   public planItemId: number;
   public planId: number;
   public name: string;
+  public isDone: boolean;
   public status: PlanItemStatus;
   public activeDays: number[];
   public createdOn: Date;

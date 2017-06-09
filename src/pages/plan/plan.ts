@@ -13,8 +13,10 @@ export class PlanPage {
   private planItems: PlanItem[];
   public activePlanItems: PlanItem[];
   public inactivePlanItems: PlanItem[];
+  public itemSelections: ItemSelection[];
   private planId: number;
   private plan: Plan;
+  // private isFilterPlanLocked: boolean;
 
   public displayDate: Date = new Date();
   private months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -30,9 +32,27 @@ export class PlanPage {
     this.planId = navParams.data.plan.planId;
     this.plan = navParams.data.plan;
 
-    this.getPlanItemsFromLocal(this.planId).then(() => {
-      this.filterPlanItems(this.displayDate.getDay());
+    // this.isFilterPlanLocked = true;
+    // this.getItemSelection(this.planId).then(() => {
+    //   console.log("item returned")
+    //   this.isFilterPlanLocked = false;
+    // });
+
+    this.getPlanItemsFromLocal(this.planId).then(() => { // make parallal
+      this.getItemSelection(this.planId).then(() => {
+        this.filterPlanItems(this.displayDate);
+      });
     });
+
+    // this.getPlanItemsFromLocal(this.planId).then(() => {
+    //   while (this.isFilterPlanLocked) {
+    //     this.filterPlanItems(this.displayDate);
+    //     setTimeout(() => {
+    //       console.log("while timer is hit");
+    //     }, 500);
+    //     console.log("while is hit");
+    //   }
+    // });
   }
 
   // private async getPlanItemDetails(planId: number, planItemId: number): Promise<PlanItem> {
@@ -105,7 +125,7 @@ export class PlanPage {
     let modal = this.modalCtrl.create(CreateItemPopupPage, {planItem: planItem});
 
     modal.onDidDismiss(planItem => {
-      this.filterPlanItems(this.displayDate.getDay());
+      this.filterPlanItems(this.displayDate);
     });
 
     modal.present();
@@ -115,7 +135,6 @@ export class PlanPage {
       let modal = this.modalCtrl.create(CreateItemPopupPage, {planId: this.planId, isCreate: true});
 
       modal.onDidDismiss(newPlanItem => {
-        console.log("New PlanItem: ", newPlanItem)
         if (newPlanItem) {
           this.planItems.push(newPlanItem);
 
@@ -131,16 +150,40 @@ export class PlanPage {
       modal.present();
   }
 
-  filterPlanItems(dayNo: number) {
+  filterPlanItems(displayDate: Date) {
+    let dayNo = displayDate.getDay();
     this.activePlanItems = [];
     this.inactivePlanItems = [];
+    let todaySelections = this.itemSelections.filter(f => f.date.setHours(0,0,0,0) == displayDate.setHours(0,0,0,0)); // check is async
 
     this.planItems.forEach(planItem => {
-      if (planItem.status == PlanItemStatus.Active && (planItem.activeDays.length == 0 || planItem.activeDays.find(f => f == dayNo) >= 0))
+      if (planItem.status == PlanItemStatus.Active && (planItem.activeDays.length == 0 || planItem.activeDays.find(f => f == dayNo) >= 0)) {
+        let selection = todaySelections.find(f => f.planItemId == planItem.planItemId); // check is async
+        if (selection)
+          planItem.isDone = selection.isDone;
+        else
+          planItem.isDone = false;
+
         this.activePlanItems.push(planItem);
-      else
+      } else
         this.inactivePlanItems.push(planItem);
     });
+  }
+
+  async getItemSelection(planId: number): Promise<void> {
+    this.itemSelections = [];
+
+    await this._dataService.getItemSelection(planId).then(retItemSelections => {
+      this.itemSelections = retItemSelections;
+      return;
+    });
+
+    // return new Promise<void>(resolve => {
+    //   this._dataService.getItemSelection(planId).then(retItemSelections => {
+    //     this.itemSelections = retItemSelections;
+    //     resolve();
+    //   });
+    // });
   }
 
   getPlanItemsFromLocal(planId: number): Promise<void> {
@@ -156,18 +199,25 @@ export class PlanPage {
 
   getLeftDay() {
     this.displayDate.setDate(this.displayDate.getDate() - 1);
-    this.filterPlanItems(this.displayDate.getDay());
+    this.filterPlanItems(this.displayDate);
   }
 
   getRightDay() {
     this.displayDate.setDate(this.displayDate.getDate() + 1);
-    this.filterPlanItems(this.displayDate.getDay());
+    this.filterPlanItems(this.displayDate);
   }
 
   showDate(): string {
     return (this.displayDate.getDate() < 10 ? "0" + this.displayDate.getDate() : this.displayDate.getDate()) + " / " + this.months[this.displayDate.getMonth()] + " / " + this.displayDate.getFullYear();
   }
 
+}
+
+class ItemSelection {
+  public planId: number;
+  public planItemId: number;
+  public date: Date;
+  public isDone: boolean;
 }
 
 class Plan {
@@ -181,6 +231,7 @@ class PlanItem {
   public planItemId: number;
   public planId: number;
   public name: string;
+  public isDone: boolean;
   public status: PlanItemStatus;
   public activeDays: number[];
   public createdOn: Date;

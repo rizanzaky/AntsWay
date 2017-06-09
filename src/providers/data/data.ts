@@ -7,6 +7,7 @@ export class DataProvider {
   private stagedPlanItems: PlanItem[];
   private plans: Plan[];
   private planItems: PlanItem[];
+  private itemSelections: ItemSelection[];
 
   constructor(private dummyData: DummyData) {
   }
@@ -66,6 +67,22 @@ export class DataProvider {
     return new Promise<PlanItem[]>(resolve => {
       resolve(this.stagedPlanItems);
     });
+  }
+
+  public async getItemSelection(planId: number): Promise<ItemSelection[]> { // need re-visit
+    this.itemSelections = this.dummyData.itemSelections;
+    // let dateFrom = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 5);
+    // let dateFrom = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 5);
+
+    // let selections = await this.itemSelections.filter(f => f.planId == planId && f.date >= dateFrom && f.date <= date);
+    let selections = await this.itemSelections.filter(f => f.planId == planId);
+    return selections;
+
+    // return new Promise<ItemSelection[]>(resolve => {
+    //   setTimeout(() => {
+    //     resolve(selections)
+    //   }, 2000)
+    // });
   }
 
   public async getPlanItems(planId: number): Promise<PlanItem[]> {
@@ -141,6 +158,13 @@ export class DataProvider {
   }
 }
 
+class ItemSelection {
+  public planId: number;
+  public planItemId: number;
+  public date: Date;
+  public isDone: boolean;
+}
+
 class Plan {
   public planId: number;
   public colour: string;
@@ -153,6 +177,7 @@ class PlanItem {
   public planId: number;
   public name: string;
   public status: PlanItemStatus;
+  public isDone: boolean;
   public activeDays: number[];
   public createdOn: Date;
 }
