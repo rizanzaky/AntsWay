@@ -69,6 +69,12 @@ export class DataProvider {
     });
   }
 
+  public async saveSelection(selection: ItemSelection) { // check if async
+    await this.dummyData.itemSelections.push(selection);
+
+    return;
+  }
+
   public async getItemSelection(planId: number): Promise<ItemSelection[]> { // need re-visit
     this.itemSelections = this.dummyData.itemSelections;
     // let dateFrom = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 5);

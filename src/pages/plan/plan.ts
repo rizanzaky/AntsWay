@@ -170,6 +170,21 @@ export class PlanPage {
     });
   }
 
+  public saveSelectionStatus(planItemId: number, userSelection: boolean) {
+    let currentSelection = this.itemSelections.find(f => f.planItemId == planItemId && f.date.setHours(0,0,0,0) == this.displayDate.setHours(0,0,0,0)); // check is async
+    
+    if (currentSelection) {
+      currentSelection.isDone = userSelection;
+    }
+    if (!currentSelection && userSelection) {
+      let selection = {planId: this.planId, planItemId: planItemId, date: new Date(this.displayDate), isDone: userSelection};
+
+      this._dataService.saveSelection(selection).then(() => {
+        this.itemSelections.push(selection);
+      });
+    }
+  }
+
   async getItemSelection(planId: number): Promise<void> {
     this.itemSelections = [];
 
