@@ -5,7 +5,8 @@
     <ion-row *ngFor="let plans of columnedPlans;">
 
       <ion-col text-center *ngFor="let plan of plans;">
-        <ion-item *ngIf="plan">
+        <ion-item *ngIf="plan" (press)="enterDeleteMode()">
+          <ion-icon *ngIf="isDeleteMode && plan.planId > 0" name="ios-close-circle-outline" (click)="confirmForDelete(plan.planId)"></ion-icon>
           <button ion-button block outline class="plan-button" [ngClass]="plan.colour" (click)="goToPlan(plan.planId)">
             <span class="title">{{plan.title}}</span>
             <br>
@@ -15,7 +16,8 @@
       </ion-col>
 
     </ion-row>
-    
+
+    <button *ngIf="isDeleteMode" ion-button block outline (click)="leaveDeleteMode()">Done</button>
   </ion-grid>
 
 </ion-content>

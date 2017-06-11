@@ -8,7 +8,12 @@
       <h2>{{plan ? plan.title : ''}}</h2>
       <p>{{plan ? plan.name : ''}}</p>
 
-      <span>--------------- 50%</span>
+      <div [style.height.px]="25">
+        <span *ngIf="completion != -1">
+          <span class="my1"><span class="my2" [style.width.%]="completion"></span></span>
+          {{completion}}%
+        </span>
+      </div>
     </span>
   </ion-navbar>
 </ion-header>

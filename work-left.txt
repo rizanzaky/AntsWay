@@ -1,0 +1,17 @@
+priority: 1
+
+* Persistant data storage (SQLite)
+* Plan, datepicker
+* UI
+* Local push notification
+* Home Chart
+
+All
+
+* Settings
+* Home timed ad
+
+Done
+
+* Plan item completion %
+* ItemCreate week days buttons

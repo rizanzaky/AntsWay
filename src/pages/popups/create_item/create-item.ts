@@ -11,6 +11,7 @@ export class CreateItemPopupPage {
     public planItemId: number;
     public isCreate: boolean;
     public planItem: PlanItem;
+    public daysSelected: boolean[] = [false,false,false,false,false,false,false];
 
     constructor(
         private _dataService: DataProvider,
@@ -36,6 +37,9 @@ export class CreateItemPopupPage {
             this.planItemId = navParams.data.planItem.planItemId;
             this.planItem = navParams.data.planItem;
             console.log("Got Edit: ", this.planItem);
+            this.planItem.activeDays.forEach(day => {
+                this.daysSelected[day] = true;
+            });
         }
     }
 
@@ -65,16 +69,22 @@ export class CreateItemPopupPage {
         });
     }
 
-    public addRemoveDay(dayNo: number): boolean {
+    public addRemoveDay(dayNo: number) {
         let value = this.planItem.activeDays.find(f => f == dayNo);
 
-        if (!value) {
-            this.planItem.activeDays.push(dayNo);
-            return false;
-        } else {
+        if (value >= 0) {
             let index = this.planItem.activeDays.indexOf(dayNo);
             this.planItem.activeDays.splice(index, 1);
-            return true;
+            this.daysSelected[dayNo] = false;
+        } else {
+            if (this.planItem.activeDays.length == 6) {
+                this.planItem.activeDays = [];
+                this.daysSelected = [false,false,false,false,false,false,false];
+                return;
+            }
+
+            this.planItem.activeDays.push(dayNo);
+            this.daysSelected[dayNo] = true;
         }
     }
 

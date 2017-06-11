@@ -17,6 +17,7 @@ export class PlanPage {
   private planId: number;
   private plan: Plan;
   // private isFilterPlanLocked: boolean;
+  public completion: number;
 
   public displayDate: Date = new Date();
   private months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -168,12 +169,23 @@ export class PlanPage {
       } else
         this.inactivePlanItems.push(planItem);
     });
+
+    this.calculatePercentage();
+  }
+
+  private calculatePercentage() {
+    if (this.activePlanItems.length > 0) {
+      let doneItems = this.activePlanItems.filter(f => f.isDone);
+      this.completion = Math.round((doneItems ? doneItems.length : 0) / this.activePlanItems.length * 100);
+    } else {
+      this.completion = -1;
+    }
   }
 
   public saveSelectionStatus(planItemId: number, userSelection: boolean) {
     let currentSelection = this.itemSelections.find(f => f.planItemId == planItemId && f.date.setHours(0,0,0,0) == this.displayDate.setHours(0,0,0,0)); // check is async
     
-    if (currentSelection) {
+    if (currentSelection) { // check
       currentSelection.isDone = userSelection;
     }
     if (!currentSelection && userSelection) {
@@ -183,6 +195,7 @@ export class PlanPage {
         this.itemSelections.push(selection);
       });
     }
+    this.calculatePercentage();
   }
 
   async getItemSelection(planId: number): Promise<void> {

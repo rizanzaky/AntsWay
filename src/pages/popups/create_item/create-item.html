@@ -11,13 +11,13 @@
         <ion-input type="text" [(ngModel)]="planItem.name"></ion-input>
     </ion-item>
 
-    <button ion-button (click)="addRemoveDay(1)">M</button> 
-    <button ion-button (click)="addRemoveDay(2)">T</button> 
-    <button ion-button (click)="addRemoveDay(3)">W</button> 
-    <button ion-button (click)="addRemoveDay(4)">T</button> 
-    <button ion-button (click)="addRemoveDay(5)">F</button> 
-    <button ion-button (click)="addRemoveDay(6)">S</button> 
-    <button ion-button (click)="addRemoveDay(0)">S</button>
+    <button ion-button outline (click)="addRemoveDay(1)" [ngClass]="daysSelected[1] ? 'myClass' : ''">M</button> 
+    <button ion-button outline (click)="addRemoveDay(2)" [ngClass]="daysSelected[2] ? 'myClass' : ''">T</button> 
+    <button ion-button outline (click)="addRemoveDay(3)" [ngClass]="daysSelected[3] ? 'myClass' : ''">W</button> 
+    <button ion-button outline (click)="addRemoveDay(4)" [ngClass]="daysSelected[4] ? 'myClass' : ''">T</button> 
+    <button ion-button outline (click)="addRemoveDay(5)" [ngClass]="daysSelected[5] ? 'myClass' : ''">F</button> 
+    <button ion-button outline (click)="addRemoveDay(6)" [ngClass]="daysSelected[6] ? 'myClass' : ''">S</button> 
+    <button ion-button outline (click)="addRemoveDay(0)" [ngClass]="daysSelected[0] ? 'myClass' : ''">S</button>
 
     <button ion-button outline (click)="toggleItemStatus()" [ngClass]="planItem.status == 2 ? 'item-inactive' : 'item-active'">{{(planItem.status == 2) ? 'Deactivated' : 'Activated'}}</button>
 

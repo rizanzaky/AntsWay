@@ -31,6 +31,20 @@ export class DataProvider {
     this.planItems.splice(indexItemToDel, 1);
   }
 
+  public deletePlan(planId: number) { // check is async
+    let planIdxToDel = [];
+    for (var index = this.dummyData.planItems.length - 1; index >= 0; index--) {
+      if (this.dummyData.planItems[index].planId == planId)
+        planIdxToDel.push(index);
+    }
+    planIdxToDel.forEach(indexItemToDel => {
+      this.dummyData.planItems.splice(indexItemToDel, 1);
+    });
+
+    let planIdx = this.dummyData.plans.findIndex(f => f.planId == planId);
+    this.dummyData.plans.splice(planIdx, 1);
+  }
+
   async getPlanDetails(planId: number): Promise<Plan> {  
     let plan = await this.plans.find(f => f.planId == planId); // error handle
 
