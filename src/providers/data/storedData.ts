@@ -1,13 +1,14 @@
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { Plan } from "../../models/plan";
 
 class StoredData {
 	constructor(
 		private sqlite: SQLite
 	) { }
 
-	initilizeDB() {
+	insertIntoPlan(plan: Plan) {
 		this.sqlite.create({
-			name: 'data.db',
+			name: 'antsway.db',
 			location: 'default'
 		}).then((db: SQLiteObject) => {
 			db.executeSql(`
@@ -21,5 +22,11 @@ class StoredData {
 			.then(() => alert('Executed SQL'))
 			.catch(e => alert(e));
   		}).catch(e => alert(e));
+	}
+
+	myTest() {
+		let db: SQLiteObject = new SQLiteObject(this);
+
+		db.open
 	}
 }

@@ -17,25 +17,52 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+			this.initilizeDB();
     });
   }
 
 	initilizeDB() {
 		this.sqlite.create({
-			name: 'data.db',
+			name: 'antsway.db',
 			location: 'default'
 		}).then((db: SQLiteObject) => {
+
 			db.executeSql(`
 				CREATE TABLE IF NOT EXISTS Plan(
 					planId	INT,
 					colour	VARCHAR(32),
-					name	VARCHAR(50),
-					title	VARCHAR(20)
+					name		VARCHAR(50),
+					title		VARCHAR(20)
 				);
 			`, {})
-			.then(() => alert('Executed SQL'))
-			.catch(e => alert(e));
-  		}).catch(e => alert(e));
+			.then(() => alert('Created Plan'))
+			.catch(e => alert(JSON.stringify(e)));
+
+			db.executeSql(`
+				CREATE TABLE IF NOT EXISTS PlanItem(
+					planItemId	INT,
+					planId			INT,
+					name				VARCHAR(50),
+					isDone			BOOLEAN,
+					status			INT,
+					activeDays	VARCHAR(15),
+					createdOn		DATETIME
+				);
+			`, {})
+			.then(() => alert('Created Planitem'))
+			.catch(e => alert(JSON.stringify(e)));
+
+			db.executeSql(`
+				CREATE TABLE IF NOT EXISTS ItemSelection(
+					planId			INT,
+					planItemId	INT,
+					date				DATETIME,
+					isDone			BOOLEAN
+				);
+			`, {})
+			.then(() => alert('Created ItemSelection'))
+			.catch(e => alert(JSON.stringify(e)));
+
+		}).catch(e => alert(JSON.stringify(e)));
 	}
 }
-

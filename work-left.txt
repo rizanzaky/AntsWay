@@ -1,6 +1,5 @@
 priority: 1
 
-* Move Models to seperate files
 * Persistant data storage (SQLite)
 * Plan, datepicker
 * UI
@@ -14,5 +13,10 @@ All
 
 Done
 
+* Move Models to seperate files
 * Plan item completion %
 * ItemCreate week days buttons
+
+Bugs/Issues
+
+* Popup forms out of view on keypad appearing
