@@ -1,3 +1,8 @@
+import { Plan } from '../../models/plan';
+import { PlanItem } from '../../models/planItem';
+import { ItemSelection } from '../../models/itemSelection';
+import { PlanItemStatus } from '../../common/enums/planItemStatus';
+
 export class DummyData {
   public plans: Plan[] = [
     {planId: 1, colour: 'tile-red', title: "Basic", name: 'Be a Man'},
@@ -32,33 +37,4 @@ export class DummyData {
     {planId: 2, planItemId: 5, date: new Date(2017, 5, 4), isDone: true},
     {planId: 3, planItemId: 1, date: new Date(2017, 5, 7), isDone: true}
   ];
-}
-
-class ItemSelection {
-  public planId: number;
-  public planItemId: number;
-  public date: Date;
-  public isDone: boolean;
-}
-
-class Plan {
-  public planId: number;
-  public colour: string;
-  public name: string;
-  public title: string;
-}
-
-class PlanItem {
-  public planItemId: number;
-  public planId: number;
-  public name: string;
-  public isDone: boolean;
-  public status: PlanItemStatus;
-  public activeDays: number[];
-  public createdOn: Date;
-}
-
-enum PlanItemStatus {
-  Active = 1,
-  Inactive = 2
 }

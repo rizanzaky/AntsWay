@@ -1,5 +1,6 @@
 priority: 1
 
+* Move Models to seperate files
 * Persistant data storage (SQLite)
 * Plan, datepicker
 * UI

@@ -3,6 +3,7 @@ import { NavController, ModalController, AlertController } from 'ionic-angular';
 import { DataProvider } from '../../providers/data/data';
 import { PlanPage } from '../plan/plan';
 import { CreatePlanPopupPage } from '../popups/create_plan/create-plan';
+import { Plan } from '../../models/plan';
 
 @Component({
   selector: 'page-home',
@@ -90,11 +91,4 @@ export class HomePage {
 
       modal.present();
   }
-}
-
-class Plan {
-  public planId: number;
-  public colour: string;
-  public name: string;
-  public title: string;
 }

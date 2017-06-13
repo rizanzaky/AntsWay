@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ViewController, NavController, NavParams } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data';
+import { Plan } from '../../../models/plan';
 
 @Component({
   templateUrl: 'create-plan.html'
@@ -56,11 +57,4 @@ export class CreatePlanPopupPage {
     dismiss(newPlan: Plan) {
         this.viewCtrl.dismiss(newPlan);
     }
-}
-
-class Plan {
-  public planId: number;
-  public colour: string;
-  public name: string;
-  public title: string;
 }

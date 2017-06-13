@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ViewController, NavController, NavParams } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data';
+import { PlanItem } from '../../../models/planItem';
+import { PlanItemStatus } from '../../../common/enums/planItemStatus';
 
 @Component({
   templateUrl: 'create-item.html'
@@ -95,19 +97,4 @@ export class CreateItemPopupPage {
     dismiss(newPlanItem: PlanItem) {
         this.viewCtrl.dismiss(newPlanItem);
     }
-}
-
-class PlanItem {
-  public planItemId: number;
-  public planId: number;
-  public name: string;
-  public isDone: boolean;
-  public status: PlanItemStatus;
-  public activeDays: number[];
-  public createdOn: Date;
-}
-
-enum PlanItemStatus {
-  Active = 1,
-  Inactive = 2
 }

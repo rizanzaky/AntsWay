@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { DummyData } from './dummyData'
+import { DummyData } from './dummyData';
+import { Plan } from '../../models/plan';
+import { PlanItem } from '../../models/planItem';
+import { ItemSelection } from '../../models/itemSelection';
 
 @Injectable()
 export class DataProvider {
@@ -176,33 +179,4 @@ export class DataProvider {
 
     return (this.planItems[this.planItems.length - 1].planItemId + 1);
   }
-}
-
-class ItemSelection {
-  public planId: number;
-  public planItemId: number;
-  public date: Date;
-  public isDone: boolean;
-}
-
-class Plan {
-  public planId: number;
-  public colour: string;
-  public name: string;
-  public title: string;
-}
-
-class PlanItem {
-  public planItemId: number;
-  public planId: number;
-  public name: string;
-  public status: PlanItemStatus;
-  public isDone: boolean;
-  public activeDays: number[];
-  public createdOn: Date;
-}
-
-enum PlanItemStatus {
-  Active = 1,
-  Inactive = 2
 }

@@ -4,6 +4,10 @@ import { DataProvider } from '../../providers/data/data';
 import { CreateItemPopupPage } from '../popups/create_item/create-item';
 import { CreatePlanPopupPage } from "../popups/create_plan/create-plan";
 import { ItemLongActionPage } from "../popups/item_long_action/item-long-action";
+import { Plan } from '../../models/plan';
+import { PlanItem } from '../../models/planItem';
+import { ItemSelection } from '../../models/itemSelection';
+import { PlanItemStatus } from '../../common/enums/planItemStatus';
 
 @Component({
   selector: 'page-plan',
@@ -239,33 +243,4 @@ export class PlanPage {
     return (this.displayDate.getDate() < 10 ? "0" + this.displayDate.getDate() : this.displayDate.getDate()) + " / " + this.months[this.displayDate.getMonth()] + " / " + this.displayDate.getFullYear();
   }
 
-}
-
-class ItemSelection {
-  public planId: number;
-  public planItemId: number;
-  public date: Date;
-  public isDone: boolean;
-}
-
-class Plan {
-  public planId: number;
-  public colour: string;
-  public name: string;
-  public title: string;
-}
-
-class PlanItem {
-  public planItemId: number;
-  public planId: number;
-  public name: string;
-  public isDone: boolean;
-  public status: PlanItemStatus;
-  public activeDays: number[];
-  public createdOn: Date;
-}
-
-enum PlanItemStatus {
-  Active = 1,
-  Inactive = 2
 }
