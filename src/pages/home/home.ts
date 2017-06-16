@@ -18,7 +18,7 @@ export class HomePage {
   constructor(
     public navCtrl: NavController, 
     private _dataService: DataProvider,
-    private _dataService2: StoredData,
+    private _dataServiceSQL: StoredData,
     public modalCtrl: ModalController,
     private alertCtrl: AlertController
   ) {
@@ -30,7 +30,7 @@ export class HomePage {
     //   this.columnedPlans = resPlans;
     // });
 
-    this._dataService2.indexPlans(this.noOfColumns).then(resPlans => {
+    this._dataServiceSQL.indexPlans(this.noOfColumns).then(resPlans => {
       this.columnedPlans = resPlans;
     });
   }

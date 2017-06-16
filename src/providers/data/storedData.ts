@@ -7,6 +7,8 @@ import { Platform } from "ionic-angular";
 
 @Injectable()
 export class StoredData {
+	private plans: Plan[];
+
 	constructor(
 		private sqlite: SQLite,
 		private platform: Platform
@@ -45,9 +47,6 @@ export class StoredData {
 						FROM Plan
 					`, {})
 					.then(plans => {
-						alert('Got ' + JSON.stringify(plans) + ' from Plan');
-						alert('Plan Rows ' + JSON.stringify(plans.rows) + ' from Plan');
-
 						resolve(this.convertColumned(columns, plans.rows));
 					})
 					.catch(e => alert('2 IndxPlan Err : ' + JSON.stringify(e)));
@@ -60,7 +59,6 @@ export class StoredData {
 	private convertColumned(columns: number, rawPlans: any): Plan[][] {
 		let isNew = true;
 		let columnedPlans = [];
-		// this.plans = this.dummyData.plans;
 		
 		let noOfPlans: number = rawPlans.length;
 
@@ -69,7 +67,9 @@ export class StoredData {
 
 			for(var j=0; j < columns; j++) {
 				if ((i + j) < noOfPlans) {
-					rowPlans.push(rawPlans.item(i+j));
+					let plan = rawPlans.item(i+j);
+					rowPlans.push(plan);
+					this.plans.push(plan);
 				} else if (isNew) {
 					rowPlans.push({planId: -1, colour: "tile-black", title: "New", name: "New"});
 					isNew = false;
