@@ -1,32 +1,131 @@
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Plan } from "../../models/plan";
+import { PlanItem } from "../../models/planItem";
+import { Injectable } from "@angular/core";
+import { Platform } from "ionic-angular";
 
-class StoredData {
+
+@Injectable()
+export class StoredData {
 	constructor(
-		private sqlite: SQLite
+		private sqlite: SQLite,
+		private platform: Platform
 	) { }
 
-	insertIntoPlan(plan: Plan) {
+	async createPlan(plan: Plan) {
+		return new Promise<void>(resolve => {
+			this.platform.ready().then(()=>{
+				this.sqlite.create({
+					name: 'antsway.db',
+					location: 'default'
+				}).then((db: SQLiteObject) => {
+					db.executeSql(`
+						INSERT INTO Plan(planId, colour, name, title)
+						VALUES (?, ?, ?, ?)
+					`, [plan.planId, plan.colour, plan.name, plan.title])
+					.then(() => {
+						alert('Inserted ' + JSON.stringify(plan) + ' into Plan');
+						resolve();
+					})
+					.catch(e => alert('2 CPlan Err : ' + JSON.stringify(e)));
+				}).catch(e => alert('2 DbC Err : ' + JSON.stringify(e)));
+			});
+		});
+	}
+
+	async indexPlans(columns: number): Promise<Plan[][]> {
+		return new Promise<Plan[][]>(resolve => {
+			this.platform.ready().then(()=>{
+				this.sqlite.create({
+					name: 'antsway.db',
+					location: 'default'
+				}).then((db: SQLiteObject) => {
+					db.executeSql(`
+						SELECT *
+						FROM Plan
+					`, {})
+					.then(plans => {
+						alert('Got ' + JSON.stringify(plans) + ' from Plan');
+						alert('Plan Rows ' + JSON.stringify(plans.rows) + ' from Plan');
+
+						resolve(this.convertColumned(columns, plans.rows));
+					})
+					.catch(e => alert('2 IndxPlan Err : ' + JSON.stringify(e)));
+				}).catch(e => alert('2 DbIP Err : ' + JSON.stringify(e)));
+			});
+		});
+	}
+
+	
+	private convertColumned(columns: number, rawPlans: any): Plan[][] {
+		let isNew = true;
+		let columnedPlans = [];
+		// this.plans = this.dummyData.plans;
+		
+		let noOfPlans: number = rawPlans.length;
+
+		for(var i=0; i < noOfPlans+1; i = i+columns) {
+			let rowPlans: Plan[] = [];
+
+			for(var j=0; j < columns; j++) {
+				if ((i + j) < noOfPlans) {
+					rowPlans.push(rawPlans.item(i+j));
+				} else if (isNew) {
+					rowPlans.push({planId: -1, colour: "tile-black", title: "New", name: "New"});
+					isNew = false;
+				} else {
+					rowPlans.push(null);
+				}
+			}
+
+			columnedPlans.push(rowPlans);
+		}
+		
+		alert("ColPlans: " + JSON.stringify(columnedPlans));
+		return(columnedPlans);
+	}
+
+
+	async readPlan(planId: number) {
 		this.sqlite.create({
 			name: 'antsway.db',
 			location: 'default'
 		}).then((db: SQLiteObject) => {
 			db.executeSql(`
-				CREATE TABLE IF NOT EXISTS Plan(
-					planId	INT,
-					colour	VARCHAR(32),
-					name	VARCHAR(50),
-					title	VARCHAR(20)
-				);
-			`, {})
-			.then(() => alert('Executed SQL'))
+				SELECT *
+				FROM Plan
+				WHERE planId = ?
+			`, [planId])
+			.then(plan => alert('Got ' + JSON.stringify(plan) + ' from Plan'))
 			.catch(e => alert(e));
   		}).catch(e => alert(e));
 	}
 
-	myTest() {
-		let db: SQLiteObject = new SQLiteObject(this);
+	createPlanItem(planItem: PlanItem) {
+		this.sqlite.create({
+			name: 'antsway.db',
+			location: 'default'
+		}).then((db: SQLiteObject) => {
+			db.executeSql(`
+				INSERT INTO Plan(planItemId, planId, name, isDone, status, activeDays, createdOn)
+				VALUES (?, ?, ?, ?, ?, ?, ?)
+			`, [planItem.planItemId, planItem.planId, planItem.name, planItem.isDone, planItem.status, JSON.stringify(planItem.activeDays), planItem.createdOn])
+			.then(() => alert('Inserted ' + JSON.stringify(PlanItem) + ' into PlanItem'))
+			.catch(e => alert(e));
+  		}).catch(e => alert(e));
+	}
 
-		db.open
+	createItemSelection(planItem: PlanItem) {
+		this.sqlite.create({
+			name: 'antsway.db',
+			location: 'default'
+		}).then((db: SQLiteObject) => {
+			db.executeSql(`
+				INSERT INTO Plan(planItemId, planId, name, isDone, status, activeDays, createdOn)
+				VALUES (?, ?, ?, ?, ?, ?, ?)
+			`, [planItem.planItemId, planItem.planId, planItem.name, planItem.isDone, planItem.status, JSON.stringify(planItem.activeDays), planItem.createdOn])
+			.then(() => alert('Inserted ' + JSON.stringify(PlanItem) + ' into PlanItem'))
+			.catch(e => alert(e));
+  		}).catch(e => alert(e));
 	}
 }

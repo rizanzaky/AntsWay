@@ -8,7 +8,7 @@ import { ItemSelection } from '../../models/itemSelection';
 @Injectable()
 export class DataProvider {
   private stagedPlanItems: PlanItem[];
-  private plans: Plan[];
+  private plans: Plan[] = []; // remove
   private planItems: PlanItem[];
   private itemSelections: ItemSelection[];
 
@@ -163,7 +163,7 @@ export class DataProvider {
   }
 
   public async getNewPlanId(): Promise<number> {
-    if (!this.plans)
+    if (!this.plans || this.plans.length == 0)
       return 1;
     
     this.plans.sort((a: Plan, b: Plan) => { return (a.planId - b.planId) });

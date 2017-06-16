@@ -4,6 +4,7 @@ import { DataProvider } from '../../providers/data/data';
 import { PlanPage } from '../plan/plan';
 import { CreatePlanPopupPage } from '../popups/create_plan/create-plan';
 import { Plan } from '../../models/plan';
+import { StoredData } from "../../providers/data/storedData";
 
 @Component({
   selector: 'page-home',
@@ -17,6 +18,7 @@ export class HomePage {
   constructor(
     public navCtrl: NavController, 
     private _dataService: DataProvider,
+    private _dataService2: StoredData,
     public modalCtrl: ModalController,
     private alertCtrl: AlertController
   ) {
@@ -24,7 +26,11 @@ export class HomePage {
   }
 
   public getPlansFromLocal() {
-    this._dataService.getPlans(this.noOfColumns).then(resPlans => {
+    // this._dataService.getPlans(this.noOfColumns).then(resPlans => {
+    //   this.columnedPlans = resPlans;
+    // });
+
+    this._dataService2.indexPlans(this.noOfColumns).then(resPlans => {
       this.columnedPlans = resPlans;
     });
   }

@@ -36,7 +36,7 @@ export class MyApp {
 				);
 			`, {})
 			.then(() => alert('Created Plan'))
-			.catch(e => alert(JSON.stringify(e)));
+			.catch(e => alert('Plan Err : ' + JSON.stringify(e)));
 
 			db.executeSql(`
 				CREATE TABLE IF NOT EXISTS PlanItem(
@@ -50,7 +50,7 @@ export class MyApp {
 				);
 			`, {})
 			.then(() => alert('Created Planitem'))
-			.catch(e => alert(JSON.stringify(e)));
+			.catch(e => alert('PlanItem Err : ' + JSON.stringify(e)));
 
 			db.executeSql(`
 				CREATE TABLE IF NOT EXISTS ItemSelection(
@@ -61,8 +61,8 @@ export class MyApp {
 				);
 			`, {})
 			.then(() => alert('Created ItemSelection'))
-			.catch(e => alert(JSON.stringify(e)));
+			.catch(e => alert('ItemS Err: ' + JSON.stringify(e)));
 
-		}).catch(e => alert(JSON.stringify(e)));
+		}).catch(e => alert('Db Err: ' + JSON.stringify(e)));
 	}
 }

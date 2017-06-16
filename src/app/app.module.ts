@@ -14,6 +14,7 @@ import { CreateItemPopupPage } from '../pages/popups/create_item/create-item';
 import { ItemLongActionPage } from '../pages/popups/item_long_action/item-long-action';
 import { FormsModule } from "@angular/forms";
 import { SQLite } from "@ionic-native/sqlite";
+import { StoredData } from "../providers/data/storedData";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SQLite } from "@ionic-native/sqlite";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataProvider,
     DummyData,
-    SQLite
+    SQLite,
+    StoredData
   ]
 })
 export class AppModule {}

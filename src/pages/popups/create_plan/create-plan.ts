@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ViewController, NavController, NavParams } from 'ionic-angular';
 import { DataProvider } from '../../../providers/data/data';
 import { Plan } from '../../../models/plan';
+import { StoredData } from "../../../providers/data/storedData";
 
 @Component({
   templateUrl: 'create-plan.html'
@@ -15,6 +16,7 @@ export class CreatePlanPopupPage {
         public viewCtrl: ViewController, 
         public navParams: NavParams, 
         private _dataService: DataProvider,
+        private _dataServiceSQL: StoredData,
         public navCtrl: NavController
     ) {
         this.isCreate = navParams.data.isCreate;
@@ -42,7 +44,14 @@ export class CreatePlanPopupPage {
         this.plan.colour = 'title-red';
 
         this._dataService.createNewPlan(this.plan).then(() => {
-            this.dismiss(this.plan);
+            alert("Done")
+            this._dataServiceSQL.createPlan(this.plan).then(() => {
+                this.dismiss(this.plan);
+            }).catch(err => {
+                alert("Err2: " + JSON.stringify(err));
+            });
+        }).catch(err => {
+            alert("Err: " + JSON.stringify(err));
         });
     }
 
