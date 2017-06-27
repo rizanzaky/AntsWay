@@ -48,42 +48,11 @@ export class DataProvider {
     this.dummyData.plans.splice(planIdx, 1);
   }
 
-  async getPlanDetails(planId: number): Promise<Plan> {  
-    let plan = await this.plans.find(f => f.planId == planId); // error handle
-
-    return plan;
-
-    // return new Promise<Plan>(resolve => {
-    //   setTimeout(() => {
-    //     resolve(plan)
-    //   }, 2000)
-    // });
-  }
-
-  createNewPlan(newPlan: Plan): Promise<void> {
-    return new Promise<void>(resolve => {
-      this.plans.push(newPlan);
-
-      resolve();
-    });
-  }
-
   public async updatePlan(planToUpdate: Plan) {
     let plan = await this.plans.find(f => f.planId == planToUpdate.planId);
 
     plan.title = planToUpdate.title;
     plan.name = planToUpdate.name;
-  }
-
-  stagePlanItems(planId: number): Promise<PlanItem[]> {
-    this.stagedPlanItems = [];
-    this.stagedPlanItems = this.planItems.filter(f => {
-      f.planId == planId;
-    });
-
-    return new Promise<PlanItem[]>(resolve => {
-      resolve(this.stagedPlanItems);
-    });
   }
 
   public async saveSelection(selection: ItemSelection) { // check if async
@@ -108,7 +77,27 @@ export class DataProvider {
     // });
   }
 
-  public async getPlanItems(planId: number): Promise<PlanItem[]> {
+  async getPlanDetails(planId: number): Promise<Plan> { // done 
+    let plan = await this.plans.find(f => f.planId == planId); // error handle
+
+    return plan;
+
+    // return new Promise<Plan>(resolve => {
+    //   setTimeout(() => {
+    //     resolve(plan)
+    //   }, 2000)
+    // });
+  }
+
+  createNewPlan(newPlan: Plan): Promise<void> { // done
+    return new Promise<void>(resolve => {
+      this.plans.push(newPlan);
+
+      resolve();
+    });
+  }
+
+  public async getPlanItems(planId: number): Promise<PlanItem[]> { // done
     this.planItems = this.dummyData.planItems;
 
     let items = await this.planItems.filter(f => f.planId == planId); // error handle
@@ -121,13 +110,13 @@ export class DataProvider {
     // });
   }
 
-  getPlans(columns: number): Promise<Plan[][]> {
+  getPlans(columns: number): Promise<Plan[][]> { // done
     return new Promise<Plan[][]>(resolve => {
       resolve( this.convertColumned(columns) );
     });
   }
 
-  private convertColumned(columns: number): Plan[][] {
+  private convertColumned(columns: number): Plan[][] { // done
     let isNew = true;
     let columnedPlans = [];
     this.plans = this.dummyData.plans;
@@ -154,7 +143,7 @@ export class DataProvider {
     return(columnedPlans);
   }
 
-  public createNewItem(newItem: PlanItem): Promise<void> {
+  public createNewItem(newItem: PlanItem): Promise<void> { // done 
     return new Promise<void>(resolve => {
       this.planItems.push(newItem);
 
@@ -162,7 +151,7 @@ export class DataProvider {
     });
   }
 
-  public async getNewPlanId(): Promise<number> {
+  public async getNewPlanId(): Promise<number> { // done 
     if (!this.plans || this.plans.length == 0)
       return 1;
     
@@ -171,7 +160,7 @@ export class DataProvider {
     return (this.plans[this.plans.length - 1].planId + 1);
   }
 
-  public async getNewItemId(): Promise<number> {
+  public async getNewItemId(): Promise<number> { // done 
     if (!this.planItems)
       return 1;
     
