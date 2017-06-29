@@ -21,7 +21,7 @@ export class DataProvider {
   //   return planItem;
   // }
 
-  public async updatePlanItem(planItem: PlanItem): Promise<void> {
+  public async updatePlanItem(planItem: PlanItem): Promise<void> { // done
     let item = await this.planItems.find(f => f.planId == planItem.planId && f.planItemId == planItem.planItemId);
 
     item.name = planItem.name;
@@ -29,12 +29,12 @@ export class DataProvider {
     item.activeDays = planItem.activeDays;
   }
 
-  public async deletePlanItem(planId: number, planItemId: number): Promise<void> {
+  public async deletePlanItem(planId: number, planItemId: number): Promise<void> { // done
     let indexItemToDel = await this.planItems.findIndex(f => f.planId == planId && f.planItemId == planItemId);
     this.planItems.splice(indexItemToDel, 1);
   }
 
-  public deletePlan(planId: number) { // check is async
+  public deletePlan(planId: number) { // done // check is async
     let planIdxToDel = [];
     for (var index = this.dummyData.planItems.length - 1; index >= 0; index--) {
       if (this.dummyData.planItems[index].planId == planId)
@@ -48,20 +48,20 @@ export class DataProvider {
     this.dummyData.plans.splice(planIdx, 1);
   }
 
-  public async updatePlan(planToUpdate: Plan) {
+  public async updatePlan(planToUpdate: Plan) { // done
     let plan = await this.plans.find(f => f.planId == planToUpdate.planId);
 
     plan.title = planToUpdate.title;
     plan.name = planToUpdate.name;
   }
 
-  public async saveSelection(selection: ItemSelection) { // check if async
+  public async saveSelection(selection: ItemSelection) { // done // check if async
     await this.dummyData.itemSelections.push(selection);
 
     return;
   }
 
-  public async getItemSelection(planId: number): Promise<ItemSelection[]> { // need re-visit
+  public async getItemSelection(planId: number): Promise<ItemSelection[]> { // done // need re-visit
     this.itemSelections = this.dummyData.itemSelections;
     // let dateFrom = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 5);
     // let dateFrom = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 5);
@@ -77,7 +77,7 @@ export class DataProvider {
     // });
   }
 
-  async getPlanDetails(planId: number): Promise<Plan> { // done 
+  async getPlanDetails(planId: number): Promise<Plan> { // done
     let plan = await this.plans.find(f => f.planId == planId); // error handle
 
     return plan;
